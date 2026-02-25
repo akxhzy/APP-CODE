@@ -4,39 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>App</title>
+    <title>App Title</title>
 </head>
 <body>
-    <div id="app-container">
-        <header>
+    <div class="app-container">
+        <header id="app-header">
             <h1>App Header</h1>
         </header>
-        <nav>
+        <nav id="main-nav">
             <ul>
                 <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#syllabus">Syllabus</a></li>
                 <li><a href="#marks">Marks</a></li>
                 <li><a href="#exams">Exams</a></li>
-                <li><a href="#study-timer">Study Timer</a></li>
+                <li><a href="#timer">Timer</a></li>
             </ul>
         </nav>
-        <main>
-            <div id="dashboard">Dashboard View</div>
-            <div id="syllabus">Syllabus View</div>
-            <div id="marks">Marks View</div>
-            <div id="exams">Exams View</div>
-            <div id="study-timer">Study Timer View</div>
-        </main>
-        <footer>
-            <nav>
-                <ul>
-                    <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#syllabus">Syllabus</a></li>
-                    <li><a href="#marks">Marks</a></li>
-                    <li><a href="#exams">Exams</a></li>
-                    <li><a href="#study-timer">Study Timer</a></li>
-                </ul>
-            </nav>
+        <div id="dashboard" class="view">Dashboard Content</div>
+        <div id="syllabus" class="view">Syllabus Content</div>
+        <div id="marks" class="view">Marks Content</div>
+        <div id="exams" class="view">Exams Content</div>
+        <div id="timer" class="view">Timer Content</div>
+        <footer id="bottom-nav">
+            <ul>
+                <li><a href="#dashboard">Home</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
         </footer>
     </div>
     <script src="app.js"></script>
