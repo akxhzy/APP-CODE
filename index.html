@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC Flow - Study Tracker</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B1B3D">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h1>HSC Flow</h1>
+            </div>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Student&background=10b981&color=fff" alt="User Avatar"
+                    class="avatar">
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view active">
+                <div class="welcome-card fade-in">
+                    <h2>Welcome back, Student! 👋</h2>
+                    <p>You have <strong>42 days</strong> until your Final Exams. Keep the flow going!</p>
+                </div>
+
+                <!-- Study Timer -->
+                <div class="timer-card fade-in" style="animation-delay: 0.05s;">
+                    <div class="timer-display" id="study-timer">00:00:00</div>
+                    <p class="timer-label">Today's Study Session</p>
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" id="timer-toggle-btn"><i class="fa-solid fa-play"></i>
+                            Start</button>
+                        <button class="btn btn-outline" id="timer-reset-btn"><i class="fa-solid fa-stop"></i>
+                            Stop</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-stats fade-in" style="animation-delay: 0.1s;">
+                    <div class="stat-card">
+                        <div class="stat-icon syllabus-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="stat-info">
+                            <h3>Syllabus</h3>
+                            <p>65% Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon avg-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="stat-info">
+                            <h3>Avg. Score</h3>
+                            <p>78% (B+)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Focus -->
+                <div class="dashboard-section fade-in" style="animation-delay: 0.2s;">
+                    <h3 class="section-title">Today's Focus</h3>
+                    <div class="focus-list" id="focus-list">
+                        <!-- Populated by JS -->
+                    </div>
+                    <!-- Add Focus Form -->
+                    <form id="focus-form" class="mt-3" style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="focus-input" placeholder="e.g. Read Physics Ch 4" required
+                            style="flex:1; padding:0.5rem; border-radius:var(--radius-sm); border:1px solid var(--clr-deep-blue-lighter); background:var(--clr-deep-blue); color:white;">
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i></button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Syllabus Tracker View -->
+            <section id="view-syllabus" class="view">
+                <h2 class="view-title">Syllabus Tracker</h2>
+                <div class="subject-tabs" id="syllabus-subjects">
+                    <button class="tab-btn active" data-subject="physics">Physics</button>
+                    <button class="tab-btn" data-subject="maths">Maths</button>
+                    <button class="tab-btn" data-subject="chemistry">Chemistry</button>
+                    <button class="tab-btn" data-subject="english">English</button>
+                    <button class="tab-btn" data-subject="bangla">Bangla</button>
+                    <button class="tab-btn" data-subject="biology">Biology</button>
+                    <button class="tab-btn" data-subject="ict">ICT</button>
+                </div>
+
+                <form id="add-topic-form" class="mb-4" style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <input type="text" id="topic-input" placeholder="Add a new topic..." required
+                        style="flex:1; padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--clr-deep-blue-lighter); background:var(--clr-deep-blue); color:white;">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
+                </form>
+
+                <div class="syllabus-list" id="syllabus-list">
+                    <!-- Javascript will populate topics here -->
+                </div>
+            </section>
+
+            <!-- Marks Entry View -->
+            <section id="view-marks" class="view">
+                <h2 class="view-title">Marks Entry</h2>
+                <div class="card form-card">
+                    <form id="marks-form">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select id="mark-subject" required>
+                                <option value="Physics">Physics</option>
+                                <option value="Maths">Maths</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="English">English</option>
+                                <option value="Bangla">Bangla</option>
+                                <option value="Biology">Biology</option>
+                                <option value="ICT">ICT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Type</label>
+                            <select id="mark-type" required>
+                                <option value="Mock Test">Mock Test</option>
+                                <option value="Half Yearly">Half Yearly</option>
+                                <option value="Pre-Test">Pre-Test</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: flex; gap: 1rem;">
+                            <div style="flex:1">
+                                <label>Gotten Marks</label>
+                                <input type="number" id="mark-gotten" min="0" placeholder="e.g. 85" required>
+                            </div>
+                            <div style="flex:1">
+                                <label>Total Marks</label>
+                                <input type="number" id="mark-total" min="1" placeholder="e.g. 100" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save Score</button>
+                    </form>
+                </div>
+
+                <div class="recent-marks mt-4">
+                    <h3 class="section-title">Recent Scores</h3>
+                    <div class="marks-list" id="recent-marks-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exams View -->
+            <section id="view-exams" class="view">
+                <h2 class="view-title">Exam Tracker</h2>
+                <div class="card form-card">
+                    <form id="exams-form">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="exam-subject" placeholder="e.g. Physics" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Title (Optional)</label>
+                            <input type="text" id="exam-title" placeholder="e.g. Final, Chapter 4 Test">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="exam-date" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Exam</button>
+                    </form>
+                </div>
+
+                <div class="upcoming-exams mt-4">
+                    <h3 class="section-title">Upcoming Exams</h3>
+                    <div class="exams-list" id="upcoming-exams-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Insights View -->
+            <section id="view-insights" class="view">
+                <h2 class="view-title">AI Insights</h2>
+
+                <div class="insight-card weak-subject fade-in">
+                    <div class="insight-header">
+                        <div class="insight-icon"><i class="fa-solid fa-robot"></i></div>
+                        <h3>AI Analysis</h3>
+                    </div>
+                    <div class="insight-body">
+                        <p class="insight-summary">Based on your recent scores, <strong>Chemistry (Organic)</strong>
+                            requires more attention. You scored 55% in your last Mock Test.</p>
+
+                        <h4 class="tips-title">Personalized Tips:</h4>
+                        <ul class="tips-list">
+                            <li><i class="fa-solid fa-check-circle text-success"></i> Review the IUPAC naming
+                                conventions for 30 minutes today.</li>
+                            <li><i class="fa-solid fa-check-circle text-success"></i> Solve 10 reaction mechanism
+                                problems focusing on substitution reactions.</li>
+                            <li><i class="fa-solid fa-check-circle text-success"></i> Try studying Chemistry when you
+                                have the most mental energy, preferably morning.</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline w-100 mt-3" id="refresh-insights"><i
+                            class="fa-solid fa-arrows-rotate"></i> Refresh Analysis</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-target="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-target="syllabus">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Syllabus</span>
+            </a>
+            <a href="#" class="nav-item" data-target="marks">
+                <i class="fa-solid fa-chart-bar"></i>
+                <span>Marks</span>
+            </a>
+            <a href="#" class="nav-item" data-target="exams">
+                <i class="fa-regular fa-calendar-check"></i>
+                <span>Exams</span>
+            </a>
+            <a href="#" class="nav-item" data-target="insights">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span>Insights</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker Registered!', reg))
+                    .catch(err => console.error('Service Worker Registration Failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
